@@ -24,11 +24,6 @@ Features:
 
 ---
 
-Screenshots:
-
-- (Add screenshots here)
-
----
 
 Installation:
 
