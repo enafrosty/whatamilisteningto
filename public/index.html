@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>What Am I Listening To</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" type="image/gif" href="https://media1.tenor.com/m/9xnHQLp_sKoAAAAd/komi-san-komi.gif">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What Am I Listening To</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" type="image/gif" href="https://media1.tenor.com/m/9xnHQLp_sKoAAAAd/komi-san-komi.gif">
 </head>
 <body class="bg-neutral-900 text-white flex flex-col items-center justify-start min-h-screen relative">
 
-  <!-- Background Image -->
-  <div id="bg" class="fixed inset-0 bg-black bg-center bg-cover blur-xl opacity-50 -z-10 transition-all"></div>
+<!-- Blurred Background -->
+<div id="bg" class="fixed inset-0 bg-black bg-center bg-cover blur-xl opacity-50 -z-10 transition-all"></div>
 
-  <!-- Header -->
-  <h1 class="text-3xl sm:text-5xl font-bold mt-8 text-center text-white drop-shadow-md">
-    iyad is listening to
-  </h1>
+<!-- Header -->
+<h1 class="text-3xl sm:text-5xl font-bold mt-8 text-center text-white drop-shadow-md">
+  iyad is listening to
+</h1>
 
-  <!-- Player Container -->
-  <div id="box" class="mt-6 flex flex-col sm:flex-row items-center sm:items-start bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-4 sm:p-6 max-w-3xl w-[95%] transition-all">
+<!-- Player Container -->
+<div id="box" class="mt-6 flex flex-col sm:flex-row items-center sm:items-start bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-4 sm:p-6 max-w-3xl w-[95%] transition-all">
 
-    <!-- Album Cover -->
-    <img id="cover" class="w-40 h-40 sm:w-48 sm:h-48 rounded-xl mb-4 sm:mb-0 sm:mr-6 object-cover shadow-lg hidden" />
+  <!-- Album Cover -->
+  <img id="cover" class="w-40 h-40 sm:w-48 sm:h-48 rounded-xl mb-4 sm:mb-0 sm:mr-6 object-cover shadow-lg hidden" />
 
-    <!-- Song Info -->
-    <div class="flex flex-col w-full">
-      <h2 id="song" class="text-xl sm:text-2xl font-bold text-white truncate"></h2>
-      <p id="artist" class="text-neutral-300 text-sm sm:text-base truncate"></p>
+  <!-- Song Info -->
+  <div class="flex flex-col w-full">
+    <h2 id="song" class="text-xl sm:text-2xl font-bold text-white truncate"></h2>
+    <p id="artist" class="text-neutral-300 text-sm sm:text-base truncate"></p>
 
-      <!-- Playlist Link -->
-      <a id="playlist" class="mt-2 text-red-500 text-sm sm:text-base underline hover:text-red-400 hidden" target="_blank"></a>
+    <!-- Playlist Link -->
+    <a id="playlist" class="mt-2 text-red-500 text-sm sm:text-base underline hover:text-red-400 hidden" target="_blank"></a>
 
-      <!-- Progress -->
-      <div id="progressContainer" class="mt-4 hidden">
-        <div class="flex justify-between text-xs sm:text-sm text-neutral-300 mb-1">
-          <span id="currentTime">0:00</span>
-          <span id="duration">0:00</span>
-        </div>
-        <div class="w-full h-2 bg-white/20 rounded-full relative">
-          <div id="progressBar" class="h-2 bg-red-500 rounded-full w-0"></div>
-          <div id="progressCircle" class="w-4 h-4 bg-red-500 rounded-full absolute top-[-4px] left-0 transform -translate-x-1/2"></div>
-        </div>
+    <!-- Progress -->
+    <div id="progressContainer" class="mt-4 hidden">
+      <div class="flex justify-between text-xs sm:text-sm text-neutral-300 mb-1">
+        <span id="currentTime">0:00</span>
+        <span id="duration">0:00</span>
+      </div>
+      <div class="w-full h-2 bg-white/20 rounded-full relative">
+        <div id="progressBar" class="h-2 bg-red-500 rounded-full w-0"></div>
+        <div id="progressCircle" class="w-4 h-4 bg-red-500 rounded-full absolute top-[-4px] left-0 transform -translate-x-1/2"></div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Footer -->
-  <footer class="w-full text-center text-sm text-neutral-400 mt-10 mb-4 z-10 relative space-y-1">
-    <div>&copy; 2025 iyad</div>
-    <div>
-      <a href="https://heyfrosty.space" class="underline hover:text-white transition-colors duration-200 mx-2">Website</a>
-      <a href="https://github.com/enafrosty/whatamilisteningto" target="_blank" class="underline hover:text-white transition-colors duration-200 mx-2">GitHub Repo</a>
-    </div>
-  </footer>
+<!-- Footer -->
+<footer class="w-full text-center text-sm text-neutral-400 mt-10 mb-4 z-10 relative space-y-1">
+  <div>&copy; 2025 iyad</div>
+  <div>
+    <a href="https://heyfrosty.space" class="underline hover:text-white transition-colors duration-200 mx-2">Website</a>
+    <a href="https://github.com/enafrosty/whatamilisteningto" target="_blank" class="underline hover:text-white transition-colors duration-200 mx-2">GitHub Repo</a>
+  </div>
+</footer>
 
-  <script>
-    async function update() {
-      try {
-        const res = await fetch("/nowplaying");
-        const data = await res.json();
+<script>
+async function update() {
+  try {
+    const res = await fetch("/nowplaying");
+    const data = await res.json();
 
-        const song = document.getElementById("song");
-        const artist = document.getElementById("artist");
-        const cover = document.getElementById("cover");
-        const playlist = document.getElementById("playlist");
-        const progressContainer = document.getElementById("progressContainer");
-        const progressBar = document.getElementById("progressBar");
-        const progressCircle = document.getElementById("progressCircle");
-        const currentTime = document.getElementById("currentTime");
-        const duration = document.getElementById("duration");
-        const bg = document.getElementById("bg");
+    const song = document.getElementById("song");
+    const artist = document.getElementById("artist");
+    const cover = document.getElementById("cover");
+    const playlist = document.getElementById("playlist");
+    const progressContainer = document.getElementById("progressContainer");
+    const progressBar = document.getElementById("progressBar");
+    const progressCircle = document.getElementById("progressCircle");
+    const currentTime = document.getElementById("currentTime");
+    const duration = document.getElementById("duration");
+    const bg = document.getElementById("bg");
 
-        if (!data.song) {
-          song.textContent = "No song playing";
-          artist.textContent = "";
-          cover.classList.add("hidden");
-          playlist.classList.add("hidden");
-          progressContainer.classList.add("hidden");
-          bg.style.backgroundImage = "";
-          return;
-        }
-
-        song.textContent = data.song;
-        artist.textContent = data.artist;
-        cover.src = data.albumArt;
-        cover.classList.remove("hidden");
-
-        // Playlist
-        if (data.playlistName && data.playlistUrl) {
-          playlist.textContent = `From playlist: ${data.playlistName}`;
-          playlist.href = data.playlistUrl;
-          playlist.classList.remove("hidden");
-        } else {
-          playlist.classList.add("hidden");
-        }
-
-        // Background
-        bg.style.backgroundImage = `url(${data.albumArt})`;
-
-        // Progress bar
-        if (data.playing && data.durationMs && data.progressMs !== undefined) {
-          progressContainer.classList.remove("hidden");
-          const progressPercent = (data.progressMs / data.durationMs) * 100;
-          progressBar.style.width = `${progressPercent}%`;
-          progressCircle.style.left = `${progressPercent}%`;
-
-          // Update time display
-          const formatTime = ms => {
-            const totalSeconds = Math.floor(ms / 1000);
-            const mins = Math.floor(totalSeconds / 60);
-            const secs = totalSeconds % 60;
-            return `${mins}:${secs.toString().padStart(2,"0")}`;
-          };
-          currentTime.textContent = formatTime(data.progressMs);
-          duration.textContent = formatTime(data.durationMs);
-        } else {
-          progressContainer.classList.add("hidden");
-        }
-
-      } catch(e) {
-        console.error("Failed to fetch now playing:", e);
-      }
+    if (!data.song) {
+      song.textContent = "No song played yet";
+      artist.textContent = "";
+      cover.classList.add("hidden");
+      playlist.classList.add("hidden");
+      progressContainer.classList.add("hidden");
+      bg.style.backgroundImage = "";
+      return;
     }
 
-    update();
-    setInterval(update, 2000);
-  </script>
+    // Always show song info
+    song.textContent = data.song;
+    artist.textContent = data.artist;
+    cover.src = data.albumArt;
+    cover.classList.remove("hidden");
+
+    // Playlist
+    if (data.playlistName && data.playlistUrl) {
+      playlist.textContent = `From playlist: ${data.playlistName}`;
+      playlist.href = data.playlistUrl;
+      playlist.classList.remove("hidden");
+    } else {
+      playlist.classList.add("hidden");
+    }
+
+    // Background
+    bg.style.backgroundImage = `url(${data.albumArt})`;
+
+    // Progress bar only if song is playing
+    if (data.playing && data.durationMs && data.progressMs !== undefined) {
+      progressContainer.classList.remove("hidden");
+      const progressPercent = (data.progressMs / data.durationMs) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+      progressCircle.style.left = `${progressPercent}%`;
+
+      const formatTime = ms => {
+        const totalSeconds = Math.floor(ms / 1000);
+        const mins = Math.floor(totalSeconds / 60);
+        const secs = totalSeconds % 60;
+        return `${mins}:${secs.toString().padStart(2,"0")}`;
+      };
+      currentTime.textContent = formatTime(data.progressMs);
+      duration.textContent = formatTime(data.durationMs);
+    } else {
+      progressContainer.classList.add("hidden");
+    }
+
+  } catch(e) {
+    console.error("Failed to fetch now playing:", e);
+  }
+}
+
+update();
+setInterval(update, 2000);
+</script>
 </body>
 </html>
