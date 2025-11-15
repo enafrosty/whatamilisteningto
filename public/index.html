@@ -14,40 +14,40 @@
   <div id="blur-bg" class="fixed inset-0 bg-cover bg-center filter blur-3xl brightness-75 z-0"></div>
   <div class="fixed inset-0 bg-black/40 z-0"></div>
 
-  <div class="relative z-10 flex flex-col items-center w-full">
+  <div class="relative z-10 flex flex-col items-center w-full px-4">
 
     <!-- Header -->
-    <h1 id="headerText" class="text-4xl md:text-6xl font-bold mb-8 drop-shadow-[0_0_5px_black] text-white text-center z-20" style="font-family: 'Montserrat', sans-serif;">
+    <h1 id="headerText" class="text-3xl sm:text-4xl md:text-6xl font-bold mb-6 sm:mb-8 drop-shadow-[0_0_5px_black] text-white text-center z-20" style="font-family: 'Montserrat', sans-serif;">
       iyad is listening to
     </h1>
 
     <!-- Player Layout -->
-    <div class="w-[90%] max-w-6xl flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-black/30 group">
+    <div class="w-full max-w-4xl flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-black/30 group">
 
       <!-- Album Cover -->
-      <div class="w-full md:w-1/3 flex items-center justify-center p-6 cursor-pointer">
+      <div class="w-full md:w-1/3 flex items-center justify-center p-4 md:p-6 cursor-pointer">
         <img id="cover" class="rounded-lg shadow-lg w-full h-auto hidden transition-transform duration-300 group-hover:scale-105">
       </div>
 
       <!-- Song Info -->
-      <div class="w-full md:w-2/3 flex flex-col justify-center p-6 space-y-4 text-white">
+      <div class="w-full md:w-2/3 flex flex-col justify-center p-4 md:p-6 space-y-3 sm:space-y-4 text-white">
         <div class="flex flex-col gap-1">
-          <h1 id="song" class="text-3xl font-bold truncate drop-shadow-[0_0_2px_black] transition-all duration-300 group-hover:text-red-400"></h1>
-          <p id="artist" class="text-neutral-200 text-lg truncate drop-shadow-[0_0_2px_black]"></p>
+          <h1 id="song" class="text-2xl sm:text-3xl md:text-3xl font-bold truncate drop-shadow-[0_0_2px_black] transition-all duration-300 group-hover:text-red-400"></h1>
+          <p id="artist" class="text-neutral-200 text-base sm:text-lg truncate drop-shadow-[0_0_2px_black]"></p>
           <p id="playlist" class="text-red-500 text-sm drop-shadow-[0_0_2px_black] cursor-pointer hover:underline"></p>
         </div>
 
         <!-- Progress -->
-        <div class="mt-4">
-          <div id="timeContainer" class="flex justify-between text-xs text-neutral-100/90 font-mono drop-shadow-[0_0_2px_black] hidden">
+        <div class="mt-3 sm:mt-4">
+          <div id="timeContainer" class="flex justify-between text-xs sm:text-sm text-neutral-100/90 font-mono drop-shadow-[0_0_2px_black] hidden">
             <span id="currentTime">0:00</span>
             <span id="totalTime">0:00</span>
           </div>
 
           <div id="progressBarContainer" class="w-full h-3 relative mt-2 hidden">
             <div class="absolute inset-0 bg-neutral-700 rounded-full"></div>
-            <div id="progressBar" class="absolute h-3 left-0 top-0 rounded-full w-0 bg-red-500"></div>
-            <div id="progressHandle" class="w-5 h-5 rounded-full shadow-lg absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 bg-red-500 pointer-events-none"></div>
+            <div id="progressBar" class="absolute h-3 left-0 top-0 rounded-full w-0 bg-red-500 transition-all duration-300"></div>
+            <div id="progressHandle" class="w-5 h-5 rounded-full shadow-lg absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 bg-red-500 pointer-events-none transition-all duration-300"></div>
           </div>
         </div>
       </div>
@@ -55,13 +55,13 @@
   </div>
 
   <!-- Footer -->
-  <footer class="w-full text-center text-sm text-neutral-400 mt-10 mb-4 z-10 relative space-y-1">
-  <div>&copy; made with alot of coffee</div>
-  <div>
-    <a href="https://heyfrosty.space" class="underline hover:text-white transition-colors duration-200 mx-2">Website</a>
-    <a href="https://github.com/enafrosty/whatamilisteningto" target="_blank" class="underline hover:text-white transition-colors duration-200 mx-2">GitHub Repo</a>
-  </div>
-</footer>
+  <footer class="w-full text-center text-sm sm:text-base text-neutral-400 mt-8 sm:mt-10 mb-4 z-10 relative space-y-1">
+    <div>&copy; made with alot of coffee</div>
+    <div>
+      <a href="https://heyfrosty.space" class="underline hover:text-white transition-colors duration-200 mx-2">Website</a>
+      <a href="https://github.com/enafrosty/whatamilisteningto" target="_blank" class="underline hover:text-white transition-colors duration-200 mx-2">GitHub Repo</a>
+    </div>
+  </footer>
 
   <!-- Script -->
   <script>
@@ -140,22 +140,21 @@
         const container = progressBarContainer;
 
         const updateProgress = () => {
-          const containerWidth = container.offsetWidth;
-          const percent = progress / duration;
-          const filledWidth = containerWidth * percent;
-          progressBar.style.width = `${filledWidth}px`;
-          progressHandle.style.left = `${filledWidth}px`;
+          const percent = (progress / duration) * 100;
+          progressBar.style.width = `${percent}%`;
+          progressHandle.style.left = `${percent}%`;
           currentTime.textContent = formatTime(progress);
           totalTime.textContent = formatTime(duration);
         };
 
         updateProgress();
 
+        // Update every 200ms for smooth movement
         progressInterval = setInterval(() => {
-          progress += 1000;
+          progress += 200;
           if (progress > duration) progress = duration;
           updateProgress();
-        }, 1000);
+        }, 200);
 
       } catch(err) {
         console.error(err);
