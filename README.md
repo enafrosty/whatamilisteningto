@@ -35,13 +35,14 @@ Installation:
 1. Clone the repository:
 
    git clone https://github.com/enafrosty/whatamilisteningto.git
+   
    cd whatamilisteningto
 
-2. Install dependencies:
+3. Install dependencies:
 
    npm install
 
-3. Create a `.env` file in the root folder:
+4. Create a `.env` file in the root folder:
 
    CLIENT_ID=your_spotify_client_id
    CLIENT_SECRET=your_spotify_client_secret
