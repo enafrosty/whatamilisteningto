@@ -1,130 +1,170 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What Am I Listening To</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="icon" type="image/gif" href="https://media1.tenor.com/m/9xnHQLp_sKoAAAAd/komi-san-komi.gif">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/gif" href="https://media1.tenor.com/m/9xnHQLp_sKoAAAAd/komi-san-komi.gif">
+  <title>What i'm listening to</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
 </head>
-<body class="bg-neutral-900 text-white flex flex-col items-center justify-start min-h-screen relative">
+<body class="flex flex-col items-center justify-center min-h-screen font-sans relative bg-black">
 
-<!-- Blurred Background -->
-<div id="bg" class="fixed inset-0 bg-black bg-center bg-cover blur-xl opacity-50 -z-10 transition-all"></div>
+  <!-- Blurred Album Background + Black Overlay -->
+  <div id="blur-bg" class="fixed inset-0 bg-cover bg-center filter blur-3xl brightness-75 z-0"></div>
+  <div class="fixed inset-0 bg-black/40 z-0"></div>
 
-<!-- Header -->
-<h1 class="text-3xl sm:text-5xl font-bold mt-8 text-center text-white drop-shadow-md">
-  iyad is listening to
-</h1>
+  <div class="relative z-10 flex flex-col items-center w-full">
 
-<!-- Player Container -->
-<div id="box" class="mt-6 flex flex-col sm:flex-row items-center sm:items-start bg-white/10 backdrop-blur-md rounded-3xl shadow-2xl p-4 sm:p-6 max-w-3xl w-[95%] transition-all">
+    <!-- Header -->
+    <h1 id="headerText" class="text-4xl md:text-6xl font-bold mb-8 drop-shadow-[0_0_5px_black] text-white text-center z-20" style="font-family: 'Montserrat', sans-serif;">
+      iyad is listening to
+    </h1>
 
-  <!-- Album Cover -->
-  <img id="cover" class="w-40 h-40 sm:w-48 sm:h-48 rounded-xl mb-4 sm:mb-0 sm:mr-6 object-cover shadow-lg hidden" />
+    <!-- Player Layout -->
+    <div class="w-[90%] max-w-6xl flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl backdrop-blur-md bg-black/30 group">
 
-  <!-- Song Info -->
-  <div class="flex flex-col w-full">
-    <h2 id="song" class="text-xl sm:text-2xl font-bold text-white truncate"></h2>
-    <p id="artist" class="text-neutral-300 text-sm sm:text-base truncate"></p>
-
-    <!-- Playlist Link -->
-    <a id="playlist" class="mt-2 text-red-500 text-sm sm:text-base underline hover:text-red-400 hidden" target="_blank"></a>
-
-    <!-- Progress -->
-    <div id="progressContainer" class="mt-4 hidden">
-      <div class="flex justify-between text-xs sm:text-sm text-neutral-300 mb-1">
-        <span id="currentTime">0:00</span>
-        <span id="duration">0:00</span>
+      <!-- Album Cover -->
+      <div class="w-full md:w-1/3 flex items-center justify-center p-6 cursor-pointer">
+        <img id="cover" class="rounded-lg shadow-lg w-full h-auto hidden transition-transform duration-300 group-hover:scale-105">
       </div>
-      <div class="w-full h-2 bg-white/20 rounded-full relative">
-        <div id="progressBar" class="h-2 bg-red-500 rounded-full w-0"></div>
-        <div id="progressCircle" class="w-4 h-4 bg-red-500 rounded-full absolute top-[-4px] left-0 transform -translate-x-1/2"></div>
+
+      <!-- Song Info -->
+      <div class="w-full md:w-2/3 flex flex-col justify-center p-6 space-y-4 text-white">
+        <div class="flex flex-col gap-1">
+          <h1 id="song" class="text-3xl font-bold truncate drop-shadow-[0_0_2px_black] transition-all duration-300 group-hover:text-red-400"></h1>
+          <p id="artist" class="text-neutral-200 text-lg truncate drop-shadow-[0_0_2px_black]"></p>
+          <p id="playlist" class="text-red-500 text-sm drop-shadow-[0_0_2px_black] cursor-pointer hover:underline"></p>
+        </div>
+
+        <!-- Progress -->
+        <div class="mt-4">
+          <div id="timeContainer" class="flex justify-between text-xs text-neutral-100/90 font-mono drop-shadow-[0_0_2px_black] hidden">
+            <span id="currentTime">0:00</span>
+            <span id="totalTime">0:00</span>
+          </div>
+
+          <div id="progressBarContainer" class="w-full h-3 relative mt-2 hidden">
+            <div class="absolute inset-0 bg-neutral-700 rounded-full"></div>
+            <div id="progressBar" class="absolute h-3 left-0 top-0 rounded-full w-0 bg-red-500"></div>
+            <div id="progressHandle" class="w-5 h-5 rounded-full shadow-lg absolute top-1/2 -translate-y-1/2 -translate-x-1/2 left-0 bg-red-500 pointer-events-none"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Footer -->
-<footer class="w-full text-center text-sm text-neutral-400 mt-10 mb-4 z-10 relative space-y-1">
-  <div>&copy; 2025 iyad</div>
+  <!-- Footer -->
+  <footer class="w-full text-center text-sm text-neutral-400 mt-10 mb-4 z-10 relative space-y-1">
+  <div>&copy; made with alot of coffee</div>
   <div>
     <a href="https://heyfrosty.space" class="underline hover:text-white transition-colors duration-200 mx-2">Website</a>
     <a href="https://github.com/enafrosty/whatamilisteningto" target="_blank" class="underline hover:text-white transition-colors duration-200 mx-2">GitHub Repo</a>
   </div>
 </footer>
 
-<script>
-async function update() {
-  try {
-    const res = await fetch("/nowplaying");
-    const data = await res.json();
+  <!-- Script -->
+  <script>
+    let progressInterval = null;
 
-    const song = document.getElementById("song");
-    const artist = document.getElementById("artist");
-    const cover = document.getElementById("cover");
-    const playlist = document.getElementById("playlist");
-    const progressContainer = document.getElementById("progressContainer");
-    const progressBar = document.getElementById("progressBar");
-    const progressCircle = document.getElementById("progressCircle");
-    const currentTime = document.getElementById("currentTime");
-    const duration = document.getElementById("duration");
-    const bg = document.getElementById("bg");
-
-    if (!data.song) {
-      song.textContent = "No song played yet";
-      artist.textContent = "";
-      cover.classList.add("hidden");
-      playlist.classList.add("hidden");
-      progressContainer.classList.add("hidden");
-      bg.style.backgroundImage = "";
-      return;
+    function formatTime(ms) {
+      const totalSeconds = Math.floor(ms / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      return `${minutes}:${seconds.toString().padStart(2,'0')}`;
     }
 
-    // Always show song info
-    song.textContent = data.song;
-    artist.textContent = data.artist;
-    cover.src = data.albumArt;
-    cover.classList.remove("hidden");
+    async function update() {
+      try {
+        const res = await fetch("/nowplaying");
+        const data = await res.json();
 
-    // Playlist
-    if (data.playlistName && data.playlistUrl) {
-      playlist.textContent = `From playlist: ${data.playlistName}`;
-      playlist.href = data.playlistUrl;
-      playlist.classList.remove("hidden");
-    } else {
-      playlist.classList.add("hidden");
+        const headerText = document.getElementById("headerText");
+        const song = document.getElementById("song");
+        const artist = document.getElementById("artist");
+        const cover = document.getElementById("cover");
+        const playlist = document.getElementById("playlist");
+        const timeContainer = document.getElementById("timeContainer");
+        const currentTime = document.getElementById("currentTime");
+        const totalTime = document.getElementById("totalTime");
+        const progressBarContainer = document.getElementById("progressBarContainer");
+        const progressBar = document.getElementById("progressBar");
+        const progressHandle = document.getElementById("progressHandle");
+        const blurBg = document.getElementById("blur-bg");
+
+        if (!data.song) {
+          headerText.textContent = "iyad was listening to";
+          song.textContent = "";
+          artist.textContent = "";
+          cover.classList.add("hidden");
+          blurBg.style.backgroundImage = "";
+          playlist.textContent = "";
+          playlist.onclick = null;
+          timeContainer.classList.add("hidden");
+          progressBarContainer.classList.add("hidden");
+          clearInterval(progressInterval);
+          return;
+        }
+
+        const isPlaying = data.playing;
+
+        headerText.textContent = isPlaying ? "iyad is listening to" : "iyad was listening to";
+        song.textContent = data.song;
+        artist.textContent = data.artist;
+        cover.src = data.albumArt;
+        cover.classList.remove("hidden");
+        blurBg.style.backgroundImage = `url(${data.albumArt})`;
+
+        if (data.playlist && data.playlistUrl) {
+          playlist.textContent = `From playlist: ${data.playlist}`;
+          playlist.onclick = () => window.open(data.playlistUrl, "_blank");
+        } else {
+          playlist.textContent = data.playlist ? `From playlist: ${data.playlist}` : "Not from a playlist";
+          playlist.onclick = null;
+        }
+
+        if (!isPlaying) {
+          timeContainer.classList.add("hidden");
+          progressBarContainer.classList.add("hidden");
+          clearInterval(progressInterval);
+          return;
+        }
+
+        timeContainer.classList.remove("hidden");
+        progressBarContainer.classList.remove("hidden");
+
+        if (progressInterval) clearInterval(progressInterval);
+
+        let progress = data.progress_ms;
+        const duration = data.duration_ms;
+        const container = progressBarContainer;
+
+        const updateProgress = () => {
+          const containerWidth = container.offsetWidth;
+          const percent = progress / duration;
+          const filledWidth = containerWidth * percent;
+          progressBar.style.width = `${filledWidth}px`;
+          progressHandle.style.left = `${filledWidth}px`;
+          currentTime.textContent = formatTime(progress);
+          totalTime.textContent = formatTime(duration);
+        };
+
+        updateProgress();
+
+        progressInterval = setInterval(() => {
+          progress += 1000;
+          if (progress > duration) progress = duration;
+          updateProgress();
+        }, 1000);
+
+      } catch(err) {
+        console.error(err);
+      }
     }
 
-    // Background
-    bg.style.backgroundImage = `url(${data.albumArt})`;
+    update();
+    setInterval(update, 2000);
+  </script>
 
-    // Progress bar only if song is playing
-    if (data.playing && data.durationMs && data.progressMs !== undefined) {
-      progressContainer.classList.remove("hidden");
-      const progressPercent = (data.progressMs / data.durationMs) * 100;
-      progressBar.style.width = `${progressPercent}%`;
-      progressCircle.style.left = `${progressPercent}%`;
-
-      const formatTime = ms => {
-        const totalSeconds = Math.floor(ms / 1000);
-        const mins = Math.floor(totalSeconds / 60);
-        const secs = totalSeconds % 60;
-        return `${mins}:${secs.toString().padStart(2,"0")}`;
-      };
-      currentTime.textContent = formatTime(data.progressMs);
-      duration.textContent = formatTime(data.durationMs);
-    } else {
-      progressContainer.classList.add("hidden");
-    }
-
-  } catch(e) {
-    console.error("Failed to fetch now playing:", e);
-  }
-}
-
-update();
-setInterval(update, 2000);
-</script>
 </body>
 </html>
