@@ -13,15 +13,14 @@ const app = express();
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
-// --- Environment Variables ---
+// --- Env Variables ---
 if (process.env.NODE_ENV !== "production") {
   import('dotenv').then(dotenv => dotenv.config());
 }
 
-// Validate required environment variables
 const { CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN } = process.env;
 if (!CLIENT_ID || !CLIENT_SECRET || !REFRESH_TOKEN) {
-  console.error("Missing required Spotify environment variables!");
+  console.error("Missing Spotify environment variables!");
   process.exit(1);
 }
 
@@ -49,9 +48,7 @@ async function getAccessToken() {
       grant_type: "refresh_token",
       refresh_token: REFRESH_TOKEN,
     }),
-    {
-      auth: { username: CLIENT_ID, password: CLIENT_SECRET },
-    }
+    { auth: { username: CLIENT_ID, password: CLIENT_SECRET } }
   );
   return token.data.access_token;
 }
@@ -63,24 +60,18 @@ app.get("/nowplaying", async (req, res) => {
 
     const now = await axios.get(
       "https://api.spotify.com/v1/me/player/currently-playing",
-      {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      }
+      { headers: { Authorization: `Bearer ${accessToken}` } }
     );
 
     let response;
 
     if (!now.data || !now.data.item) {
-      // No song currently playing, return last song if exists
       const lastSong = getLastSong();
-      if (!lastSong) {
-        response = { playing: false };
-      } else {
-        response = { ...lastSong, playing: false };
-      }
+      if (!lastSong) response = { playing: false };
+      else response = { ...lastSong, playing: false };
     } else {
       const songData = {
-        playing: true,
+        playing: now.data.is_playing,
         song: now.data.item.name,
         artist: now.data.item.artists.map(a => a.name).join(", "),
         albumArt: now.data.item.album.images[0]?.url || "",
@@ -96,8 +87,7 @@ app.get("/nowplaying", async (req, res) => {
 
     res.json(response);
   } catch (err) {
-    console.error("Error fetching Spotify data:", err.message);
-    // Return last song if available
+    console.error("Spotify API error:", err.message);
     const lastSong = getLastSong();
     if (lastSong) res.json({ ...lastSong, playing: false });
     else res.json({ playing: false });
