@@ -62,13 +62,20 @@ Installation:
 
 Folder Structure:
 
-spotify-nowplaying/
+whatamilisteningto/
+
 ├─ public/
+
 │  └─ index.html
+
 ├─ server.js
+
 ├─ lastSong.json      # Stores last played song
+
 ├─ package.json
+
 ├─ .env
+
 ├─ README.md
 
 ---
