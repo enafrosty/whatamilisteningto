@@ -45,7 +45,9 @@ Installation:
 4. Create a `.env` file in the root folder:
 
    CLIENT_ID=your_spotify_client_id
+   
    CLIENT_SECRET=your_spotify_client_secret
+   
    REFRESH_TOKEN=your_spotify_refresh_token
 
 > Make sure your Spotify app has the `user-read-currently-playing` and `user-read-playback-state` scopes.
