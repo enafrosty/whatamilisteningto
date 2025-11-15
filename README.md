@@ -1,4 +1,4 @@
-# Spotify Now Playing — Web Player
+# What am i listening to
 
 [![Node.js](https://img.shields.io/badge/Node.js-18-green)](https://nodejs.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
@@ -6,7 +6,7 @@
 
 A sleek Spotify Now Playing web player that shows your currently playing song in real-time. The design mimics Spotify’s UI with a blurry album background, glassy player, progress bar, and playlist integration.
 
-Demo: https://heyfrosty.space
+Demo: https://music.heyfrosty.space
 
 ---
 
@@ -34,8 +34,8 @@ Installation:
 
 1. Clone the repository:
 
-   git clone https://github.com/enafrosty/spotify-nowplaying.git
-   cd spotify-nowplaying
+   git clone https://github.com/enafrosty/whatamilisteningto.git
+   cd whatamilisteningto
 
 2. Install dependencies:
 
@@ -99,4 +99,4 @@ MIT License © 2025 iyad (https://heyfrosty.space)
 Links:
 
 - Website: https://heyfrosty.space
-- GitHub Repository: https://github.com/enafrosty/spotify-nowplaying
+- GitHub Repository: https://github.com/enafrosty/whatamilisteningto
