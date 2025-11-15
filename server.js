@@ -67,17 +67,21 @@ app.get("/nowplaying", async (req, res) => {
 
     if (!now.data || !now.data.item) {
       const lastSong = getLastSong();
-      if (!lastSong) response = { playing: false };
-      else response = { ...lastSong, playing: false };
+      if (!lastSong) {
+        response = { playing: false, progress_ms: 0, duration_ms: 0 };
+      } else {
+        response = { ...lastSong, playing: false, progress_ms: 0, duration_ms: lastSong.duration_ms || 0 };
+      }
     } else {
+      const item = now.data.item;
       const songData = {
         playing: now.data.is_playing,
-        song: now.data.item.name,
-        artist: now.data.item.artists.map(a => a.name).join(", "),
-        albumArt: now.data.item.album.images[0]?.url || "",
-        durationMs: now.data.item.duration_ms,
-        progressMs: now.data.progress_ms,
-        playlistName: now.data.context?.type === "playlist" ? now.data.context?.uri.split(":").pop() : null,
+        song: item.name,
+        artist: item.artists.map(a => a.name).join(", "),
+        albumArt: item.album.images[0]?.url || "",
+        duration_ms: item.duration_ms,           // matches frontend
+        progress_ms: now.data.progress_ms,       // matches frontend
+        playlist: now.data.context?.type === "playlist" ? now.data.context?.uri.split(":").pop() : null, // matches frontend
         playlistUrl: now.data.context?.type === "playlist" ? now.data.context?.external_urls.spotify : null,
       };
 
@@ -89,8 +93,11 @@ app.get("/nowplaying", async (req, res) => {
   } catch (err) {
     console.error("Spotify API error:", err.message);
     const lastSong = getLastSong();
-    if (lastSong) res.json({ ...lastSong, playing: false });
-    else res.json({ playing: false });
+    if (lastSong) {
+      res.json({ ...lastSong, playing: false, progress_ms: 0, duration_ms: lastSong.duration_ms || 0 });
+    } else {
+      res.json({ playing: false, progress_ms: 0, duration_ms: 0 });
+    }
   }
 });
 
